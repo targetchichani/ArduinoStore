@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('siteTheme') === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="doc_title">متجر أردوينو الإلكتروني - Houssam HK</title>
+    <meta name="description" content="اكتشف تفاصيل المنتج، السعر، والتقييمات، وأضفه لسلتك أو للمفضلة بضغطة وحدة.">
+     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="main-header-nav">
+    <div class="nav-container">
+        
+        <a href="index.html" class="logo" data-i18n="logo">أردوينو <span>ستور</span></a>
+        
+
+        <button id="cartToggleBtn" class="cart-toggle-btn" aria-label="سلة المشتريات">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="cart-count-badge">0</span>
+        </button>
+
+        <button id="wishlistToggleBtn" class="wishlist-toggle-btn cart-toggle-btn" aria-label="قائمة المفضلة">
+            <i class="fas fa-heart"></i>
+            <span id="wishlistCount" class="wishlist-count-badge cart-count-badge">0</span>
+        </button>
+
+        <button id="menuToggleBtn" class="menu-toggle-btn" aria-label="فتح القائمة"><i class="fas fa-bars"></i></button>
+
+        <nav id="mainNav">
+                <ul class="nav-menu-list">
+                    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                    
+                    <li class="has-mega-menu">
+                        <a href="#" data-i18n="nav_community">مجتمع <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-container">
+                                <div class="mega-column">
+                                    <ul>
+                                        <li><a href="https://t.me/webdev_trainings" target="_blank" data-i18n="comm_web"><i class="fas fa-code"></i> web developer</a></li>
+                                        <li><a href="https://t.me/applicationdeveloperss" target="_blank" data-i18n="comm_app"><i class="fas fa-mobile-alt"></i> app developer</a></li>
+                                        <li><a href="https://youtu.be/7_PeuTsx7UM" target="_blank" data-i18n="comm_ai"><i class="fas fa-robot"></i> Ai automation</a></li>
+                                        <li><a href="https://youtu.be/aPi_Bm5DWFo" target="_blank" data-i18n="comm_workshops"><i class="fas fa-chalkboard-teacher"></i> workshops</a></li>
+                                        <li><a href="https://github.com/targetchichani-ui" target="_blank" data-i18n="comm_github"><i class="fab fa-github"></i> github</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="has-mega-menu">
+                        <a href="#" data-i18n="nav_projects">المشاريع <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-container">
+                                <div class="mega-column">
+                                    <ul>
+                                        <li><a href="https://youtu.be/auTM4S59pgo" target="_blank" data-i18n="proj_weather"><i class="fas fa-cloud-sun"></i> weather situation</a></li>
+                                        <li><a href="https://youtu.be/iZcMQ2dn27s" target="_blank" data-i18n="proj_thermometer"><i class="fas fa-thermometer-half"></i> LCD thermometer</a></li>
+                                        <li><a href="https://youtu.be/iFPfg-x1qX8" target="_blank" data-i18n="proj_blinking"><i class="fas fa-bolt"></i> Blinking LED</a></li>
+                                        <li><a href="https://youtu.be/04rOjWU-w7A" target="_blank" data-i18n="proj_alarm"><i class="fas fa-bell"></i> Motion alarm</a></li>
+                                        <li><a href="https://youtu.be/z524YqJvyak" target="_blank" data-i18n="proj_robot"><i class="fas fa-car"></i> Robot car</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li><a href="shop.html" class="btn-shop-orange" data-i18n="nav_shop">تسوق</a></li>
+                </ul>
+                <button id="darkModeToggleBtn" class="theme-toggle-btn" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button>
+                <button id="lang-toggle-btn" class="lang-switch-btn">English</button>
+            </nav>
+            
+        </div>
+    </header>
+
+    <main style="padding: 120px 5% 80px 5%; min-height: 80vh; background: var(--bg-color);">
+        <div id="productDetailLoading" class="pd-skeleton-wrapper">
+            <div class="pd-skeleton-grid">
+                <div class="pd-skeleton-img"></div>
+                <div>
+                    <div class="pd-skeleton-line w-30"></div>
+                    <div class="pd-skeleton-line w-70"></div>
+                    <div class="pd-skeleton-line w-40"></div>
+                    <div class="pd-skeleton-line w-100"></div>
+                    <div class="pd-skeleton-line w-90"></div>
+                    <div class="pd-skeleton-line w-50"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="productDetailContent" class="product-detail-wrapper" style="display:none;">
+            <a href="shop.html" class="back-to-shop-link">
+                <i class="fas fa-arrow-right rtl-arrow"></i>
+                <span data-i18n="back_to_shop">رجوع للمتجر</span>
+            </a>
+
+            <div class="product-detail-grid">
+                <div class="product-detail-img-box">
+                    <img loading="eager" decoding="async" id="pdImage" src="" alt="">
+                </div>
+                <div class="product-detail-info">
+                    <p class="product-category" id="pdCategory"></p>
+                    <h1 id="pdName"></h1>
+                    <div class="product-detail-rating" id="pdRating">
+                        <span class="stars-display" id="pdRatingStars"></span>
+                        <span id="pdRatingCount">(0)</span>
+                    </div>
+                    <p class="product-detail-price" id="pdPrice"></p>
+                    <p class="product-detail-desc" id="pdDesc"></p>
+
+                    <div class="product-detail-qty-row">
+                        <span data-i18n="quantity">الكمية</span>
+                        <div class="qty-selector">
+                            <button id="pdQtyMinus" class="cart-qty-btn">−</button>
+                            <span id="pdQtyValue">1</span>
+                            <button id="pdQtyPlus" class="cart-qty-btn">+</button>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; align-items:stretch; gap:10px;">
+                        <button id="pdAddToCartBtn" class="btn-cta product-detail-add-btn" style="flex:1;">
+                            <i class="fas fa-shopping-cart"></i> <span data-i18n="add_to_cart">أضف إلى السلة</span>
+                        </button>
+                        <button id="pdWishlistBtn" class="product-detail-wishlist-btn" title="أضف إلى المفضلة">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+
+                    <div class="product-detail-trust">
+                        <p><i class="fas fa-truck"></i> <span data-i18n="trust_delivery">توصيل لكل الولايات</span></p>
+                        <p><i class="fas fa-shield-alt"></i> <span data-i18n="trust_warranty">ضمان على المنتج</span></p>
+                    </div>
+
+                    <div class="rate-product-box">
+                        <p data-i18n="rate_this_product">قيّم هذا المنتج</p>
+                        <div class="rate-stars-input" id="pdRateInput">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                        </div>
+                        <span class="rate-feedback" id="pdRateFeedback"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="productNotFound" style="display:none; text-align:center; padding: 60px 0;">
+            <h2 data-i18n="product_not_found">هاد المنتج ماكاينش</h2>
+            <a href="shop.html" class="btn-cta" data-i18n="back_to_shop">رجوع للمتجر</a>
+        </div>
+    </main>
+
+    
+    <!-- الفوتر السفلي الثابت والموحد -->
+    <footer class="main-footer">
+        <form class="footer-contact-form" method="post" action="#">
+            <h3 data-i18n="form_title">راسلنا</h3>
+            <div class="form-fields">
+                <input type="text" name="name" placeholder="الاسم" data-i18n-placeholder="form_name" required>
+                <input type="email" name="email" placeholder="البريد الإلكتروني" data-i18n-placeholder="form_email" required>
+                <textarea name="message" rows="3" placeholder="رسالتك" data-i18n-placeholder="form_message" required></textarea>
+            </div>
+            <button type="submit" class="btn-cta" data-i18n="form_submit">إرسال</button>
+        </form>
+
+        <div class="footer-container">
+            
+            <div class="footer-box text-box">
+                <h3 data-i18n="footer_about_title">أردوينو ستور</h3>
+                <p data-i18n="footer_about_desc">منصتك الأولى للحصول على أفضل القطع الإلكترونية والمتحكمات الذكية لبناء وتطوير مشاريعك البرمجية بكل سهولة.</p>
+            </div>
+
+            <div class="footer-box links-box">
+                <h3 data-i18n="footer_links_title">روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="shop.html" data-i18n="footer_link_products">المنتجات</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box contact-box">
+                <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:targetchichani@gmail.com">targetchichani@gmail.com</a></p>
+                <p data-i18n="footer_phone"><i class="fas fa-phone-alt"></i> <a href="tel:+213670346089" style="direction: ltr; display: inline-block;">+213 670 34 60 89</a></p>
+                <p><i class="fas fa-headset"></i> <span data-i18n="footer_support">دعم فني متواصل 24/7</span></p>
+            </div>
+
+            <div class="footer-box social-box">
+                <h3 data-i18n="footer_social_title">تابعنا على منصاتنا</h3>
+                <p data-i18n="footer_social_desc">اشترك وماتنساش تتابعنا على حساباتنا الرسمية:</p>
+                <div class="social-icons">
+                    <a href="https://www.youtube.com/@ChichaniTarget" target="_blank" class="icon-yt" title="Chichani Target على يوتيوب"><i class="fab fa-youtube"></i></a>
+                    <a href="https://t.me/chichani_8" target="_blank" class="icon-tg" title="تيليجرام"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.instagram.com/7essism" target="_blank" class="icon-ig" title="7essism على إنستغرام"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1FkNJqn9LR/" target="_blank" class="icon-fb" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="mailto:targetchichani@gmail.com" target="_blank" class="gmail-neon-link">
+    <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" class="gmail-neon-icon">
+</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <span data-i18n="footer_rights">أردوينو ستور - المطور Houssam HK. جميع الحقوق محفوظة.</span></p>
+        </div>
+    </footer>
+
+    <!-- سلة المشتريات -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+    <!-- قائمة المفضلة -->
+    <div id="wishlistOverlay" class="wishlist-overlay cart-overlay"></div>
+    <aside id="wishlistDrawer" class="wishlist-drawer cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 data-i18n="wishlist_title">المفضلة</h3>
+            <button id="wishlistCloseBtn" class="cart-close-btn" aria-label="إغلاق">&times;</button>
+        </div>
+        <div id="wishlistItemsContainer" class="cart-items-container">
+            <p class="cart-empty-msg" data-i18n="wishlist_empty">لائحة المفضلة فارغة حالياً</p>
+        </div>
+    </aside>
+
+    <aside id="cartDrawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 data-i18n="cart_title">سلة المشتريات</h3>
+            <button id="cartCloseBtn" class="cart-close-btn" aria-label="إغلاق">&times;</button>
+        </div>
+        <div id="cartItemsContainer" class="cart-items-container">
+            <p class="cart-empty-msg" data-i18n="cart_empty">السلة فارغة حالياً</p>
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-total-row">
+                <span data-i18n="cart_total">المجموع</span>
+                <span id="cartTotalPrice">0 DA</span>
+            </div>
+            <button id="cartCheckoutBtn" class="btn-cta cart-checkout-btn" data-i18n="cart_checkout">إتمام الطلب عبر واتساب</button>
+        </div>
+    </aside>
+
+    <!-- زر واتساب العائم (Live Chat) -->
+    <a href="https://wa.me/213670346089?text=مرحباً، عندي استفسار حول منتجاتكم" target="_blank" class="whatsapp-float-btn" aria-label="تواصل معنا عبر واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- زر العودة للأعلى -->
+    <button id="backToTopBtn" class="back-to-top-btn" aria-label="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ربط السكريبت الموحد لضمان عمل الترجمة ونظام اللغات في هذه الصفحة أيضاً -->
+    <script src="products-data.js"></script>
+    <script src="script.js"></script>
+    <!-- كود تفاصيل المنتج مدموج مباشرة هنا (بدل ملف خارجي) باش نتفاديو أي مشكل فاسم الملف -->
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    const loadingEl = document.getElementById('productDetailLoading');
+    const contentEl = document.getElementById('productDetailContent');
+    const notFoundEl = document.getElementById('productNotFound');
+
+    if (typeof PRODUCTS_DATA === 'undefined') {
+        console.error('products-data.js لم يتم تحميله');
+        return;
+    }
+
+    const product = PRODUCTS_DATA.find(p => p.id === productId);
+
+    if (loadingEl) loadingEl.style.display = 'none';
+
+    if (!product) {
+        if (notFoundEl) notFoundEl.style.display = 'block';
+        return;
+    }
+
+    if (contentEl) contentEl.style.display = 'block';
+
+    // اللغة الحالية محفوظة فـ localStorage من script.js
+    const lang = localStorage.getItem('selectedLanguage') || 'ar';
+    const desc = lang === 'ar' ? product.desc_ar : product.desc_en;
+
+    document.title = `${product.name} - Arduino Store`;
+
+    const imgEl = document.getElementById('pdImage');
+    const categoryEl = document.getElementById('pdCategory');
+    const nameEl = document.getElementById('pdName');
+    const priceEl = document.getElementById('pdPrice');
+    const descEl = document.getElementById('pdDesc');
+    const qtyValueEl = document.getElementById('pdQtyValue');
+    const qtyMinusBtn = document.getElementById('pdQtyMinus');
+    const qtyPlusBtn = document.getElementById('pdQtyPlus');
+    const addToCartBtn = document.getElementById('pdAddToCartBtn');
+
+    const imgBoxEl = imgEl ? imgEl.closest('.product-detail-img-box') : null;
+    if (imgEl) {
+        imgEl.alt = product.name;
+        if (imgBoxEl) {
+            imgBoxEl.classList.add('img-skeleton');
+            imgEl.addEventListener('load', () => {
+                imgBoxEl.classList.remove('img-skeleton');
+                imgBoxEl.classList.add('img-loaded');
+            });
+            imgEl.addEventListener('error', () => {
+                imgBoxEl.classList.remove('img-skeleton');
+            });
+        }
+        imgEl.src = product.img;
+    }
+    if (categoryEl) categoryEl.textContent = product.category;
+    if (nameEl) nameEl.textContent = product.name;
+    if (priceEl) priceEl.textContent = product.price.toLocaleString('en-US') + ' DA';
+    if (descEl) descEl.textContent = desc;
+
+    let qty = 1;
+    function renderQty() {
+        if (qtyValueEl) qtyValueEl.textContent = qty;
+    }
+    renderQty();
+
+    if (qtyMinusBtn) {
+        qtyMinusBtn.addEventListener('click', () => {
+            if (qty > 1) qty--;
+            renderQty();
+        });
+    }
+    if (qtyPlusBtn) {
+        qtyPlusBtn.addEventListener('click', () => {
+            qty++;
+            renderQty();
+        });
+    }
+
+    // ==================== زر المفضلة (Wishlist) فصفحة تفاصيل المنتج ====================
+    const WISHLIST_KEY = 'arduinoStoreWishlist';
+    const pdWishlistBtn = document.getElementById('pdWishlistBtn');
+
+    function getWishlistPD() {
+        try {
+            return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function syncWishlistBtnPD() {
+        if (!pdWishlistBtn) return;
+        const list = getWishlistPD();
+        const active = list.some(item => item.id === product.id);
+        pdWishlistBtn.classList.toggle('active', active);
+        const icon = pdWishlistBtn.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('far', !active);
+            icon.classList.toggle('fas', active);
+        }
+    }
+
+    // ملاحظة مهمة: ما نربطوش هنا addEventListener('click') على pdWishlistBtn،
+    // لأن script.js عندو ديجا مستمع عام على كل ".wishlist-btn, .product-detail-wishlist-btn"
+    // (شوف قسم 5.5 فـ script.js). كنا نربطو مرتين، وكل ضغطة كانت تبدل الحالة مرتين
+    // (تزيد فالمفضلة وفالحين تحيدها فآني واحد)، فالزر كان يبان ماخدمش فهاد الصفحة.
+    // هنا غير كنحضرو الـ dataset باش المستمع العام يقدر يقرا بيانات المنتج، وكنرسمو الحالة الأولية.
+    if (pdWishlistBtn) {
+        pdWishlistBtn.dataset.id = product.id;
+        pdWishlistBtn.dataset.name = product.name;
+        pdWishlistBtn.dataset.price = product.price;
+        pdWishlistBtn.dataset.img = product.img;
+
+        syncWishlistBtnPD();
+    }
+
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', () => {
+            const CART_KEY = 'arduinoStoreCart';
+            let cart = [];
+            try {
+                cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+            } catch (e) {
+                cart = [];
+            }
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ id: product.id, name: product.name, price: product.price, img: product.img, qty: qty });
+            }
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+            // تحديث عداد السلة فالهيدر مباشرة
+            const cartCountEl = document.getElementById('cartCount');
+            if (cartCountEl) {
+                const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+                cartCountEl.textContent = totalQty;
+                cartCountEl.classList.add('bump');
+                setTimeout(() => cartCountEl.classList.remove('bump'), 200);
+            }
+
+            // إعادة رسم محتوى الدرج إلى كان مفتوح مسبقاً (نفس الدالة renderCart كاينة فـ script.js
+            // لكن ماشي معروضة عالمياً، فنفتح الدرج مباشرة كإشارة للمستخدم)
+            const cartDrawer = document.getElementById('cartDrawer');
+            const cartOverlay = document.getElementById('cartOverlay');
+            if (cartDrawer && cartOverlay) {
+                cartDrawer.classList.add('active');
+                cartOverlay.classList.add('active');
+                document.body.classList.add('cart-open');
+                // نطلق حدث خاص باش سكريبت السلة (لي فـ script.js) يعاود يرسم المحتوى
+                window.dispatchEvent(new CustomEvent('cartUpdated'));
+            }
+
+            addToCartBtn.classList.add('added');
+            setTimeout(() => addToCartBtn.classList.remove('added'), 400);
+        });
+    }
+
+    // ==================== التقييمات (نجوم حقيقية + عدد المراجعات) ====================
+    const pdRatingStarsEl = document.getElementById('pdRatingStars');
+    const pdRatingCountEl = document.getElementById('pdRatingCount');
+    const pdRateInputEl = document.getElementById('pdRateInput');
+    const pdRateFeedbackEl = document.getElementById('pdRateFeedback');
+
+    function renderProductRating() {
+        if (!window.ArduinoRatings) return;
+        const stats = window.ArduinoRatings.getStats(product);
+
+        if (pdRatingStarsEl) pdRatingStarsEl.innerHTML = window.ArduinoRatings.buildStarsHTML(stats.avg);
+
+        if (pdRatingCountEl) {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'ar';
+            const reviewsLabel = currentLang === 'ar' ? 'تقييم' : 'reviews';
+            pdRatingCountEl.textContent = `${stats.avg.toFixed(1)} (${stats.count} ${reviewsLabel})`;
+        }
+
+        if (pdRateInputEl) {
+            pdRateInputEl.querySelectorAll('i').forEach(star => {
+                const val = parseInt(star.dataset.value, 10);
+                const active = !!stats.userRating && val <= stats.userRating;
+                star.classList.toggle('fas', active);
+                star.classList.toggle('far', !active);
+            });
+        }
+    }
+
+    renderProductRating();
+
+    if (pdRateInputEl) {
+        const starEls = Array.from(pdRateInputEl.querySelectorAll('i'));
+
+        starEls.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const hoverVal = parseInt(star.dataset.value, 10);
+                starEls.forEach(s => {
+                    const v = parseInt(s.dataset.value, 10);
+                    s.classList.toggle('fas', v <= hoverVal);
+                    s.classList.toggle('far', v > hoverVal);
+                });
+            });
+
+            star.addEventListener('click', () => {
+                const val = parseInt(star.dataset.value, 10);
+                if (window.ArduinoRatings) window.ArduinoRatings.saveRating(product.id, val);
+                renderProductRating();
+                if (pdRateFeedbackEl) {
+                    const currentLang = localStorage.getItem('selectedLanguage') || 'ar';
+                    pdRateFeedbackEl.textContent = currentLang === 'ar' ? 'شكراً على تقييمك!' : 'Thanks for your rating!';
+                }
+            });
+        });
+
+        pdRateInputEl.addEventListener('mouseleave', renderProductRating);
+    }
+});
+    </script>
+</body>
+</html>

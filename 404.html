@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('siteTheme') === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="error_404_title">الصفحة اللي قلبت عليها ماكانتش - أردوينو ستور</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="main-header-nav">
+    <div class="nav-container">
+
+        <a href="index.html" class="logo" data-i18n="logo">أردوينو <span>ستور</span></a>
+
+
+        <button id="cartToggleBtn" class="cart-toggle-btn" aria-label="سلة المشتريات">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="cart-count-badge">0</span>
+        </button>
+
+        <button id="wishlistToggleBtn" class="wishlist-toggle-btn cart-toggle-btn" aria-label="قائمة المفضلة">
+            <i class="fas fa-heart"></i>
+            <span id="wishlistCount" class="wishlist-count-badge cart-count-badge">0</span>
+        </button>
+
+        <button id="menuToggleBtn" class="menu-toggle-btn" aria-label="فتح القائمة"><i class="fas fa-bars"></i></button>
+
+        <nav id="mainNav">
+                <ul class="nav-menu-list">
+                    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+
+                    <li class="has-mega-menu">
+                        <a href="#" data-i18n="nav_community">مجتمع <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-container">
+                                <div class="mega-column">
+                                    <ul>
+                                        <li><a href="https://t.me/webdev_trainings" target="_blank" data-i18n="comm_web"><i class="fas fa-code"></i> web developer</a></li>
+                                        <li><a href="https://t.me/applicationdeveloperss" target="_blank" data-i18n="comm_app"><i class="fas fa-mobile-alt"></i> app developer</a></li>
+                                        <li><a href="https://youtu.be/7_PeuTsx7UM" target="_blank" data-i18n="comm_ai"><i class="fas fa-robot"></i> Ai automation</a></li>
+                                        <li><a href="https://youtu.be/aPi_Bm5DWFo" target="_blank" data-i18n="comm_workshops"><i class="fas fa-chalkboard-teacher"></i> workshops</a></li>
+                                        <li><a href="https://github.com/targetchichani-ui" target="_blank" data-i18n="comm_github"><i class="fab fa-github"></i> github</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="has-mega-menu">
+                        <a href="#" data-i18n="nav_projects">المشاريع <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-container">
+                                <div class="mega-column">
+                                    <ul>
+                                        <li><a href="https://youtu.be/auTM4S59pgo" target="_blank" data-i18n="proj_weather"><i class="fas fa-cloud-sun"></i> weather situation</a></li>
+                                        <li><a href="https://youtu.be/iZcMQ2dn27s" target="_blank" data-i18n="proj_thermometer"><i class="fas fa-thermometer-half"></i> LCD thermometer</a></li>
+                                        <li><a href="https://youtu.be/iFPfg-x1qX8" target="_blank" data-i18n="proj_blinking"><i class="fas fa-bolt"></i> Blinking LED</a></li>
+                                        <li><a href="https://youtu.be/04rOjWU-w7A" target="_blank" data-i18n="proj_alarm"><i class="fas fa-bell"></i> Motion alarm</a></li>
+                                        <li><a href="https://youtu.be/z524YqJvyak" target="_blank" data-i18n="proj_robot"><i class="fas fa-car"></i> Robot car</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li><a href="shop.html" class="btn-shop-orange" data-i18n="nav_shop">تسوق</a></li>
+                </ul>
+                <button id="darkModeToggleBtn" class="theme-toggle-btn" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button>
+                <button id="lang-toggle-btn" class="lang-switch-btn">English</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- محتوى صفحة 404 -->
+    <section class="error-404-section">
+        <div class="error-404-content">
+            <div class="error-404-code">404</div>
+            <div class="error-404-icon"><i class="fas fa-plug-circle-xmark"></i></div>
+            <h1 data-i18n="error_404_title">الصفحة اللي قلبت عليها ماكانتش</h1>
+            <p data-i18n="error_404_desc">يمكن الرابط تبدل ولا الصفحة تشالت. جرب ترجع للرئيسية ولا تكمل التسوق عندنا.</p>
+            <ul class="error-404-actions">
+                <li><a href="index.html" class="btn-cta" data-i18n="error_404_home">الرئيسية</a></li>
+                <li><a href="shop.html" class="btn-secondary-404" data-i18n="error_404_shop">تصفح المتجر</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- الفوتر السفلي الثابت والموحد -->
+    <footer class="main-footer">
+        <form class="footer-contact-form" method="post" action="#">
+            <h3 data-i18n="form_title">راسلنا</h3>
+            <div class="form-fields">
+                <input type="text" name="name" placeholder="الاسم" data-i18n-placeholder="form_name" required>
+                <input type="email" name="email" placeholder="البريد الإلكتروني" data-i18n-placeholder="form_email" required>
+                <textarea name="message" rows="3" placeholder="رسالتك" data-i18n-placeholder="form_message" required></textarea>
+            </div>
+            <button type="submit" class="btn-cta" data-i18n="form_submit">إرسال</button>
+        </form>
+
+        <div class="footer-container">
+
+            <div class="footer-box text-box">
+                <h3 data-i18n="footer_about_title">أردوينو ستور</h3>
+                <p data-i18n="footer_about_desc">منصتك الأولى للحصول على أفضل القطع الإلكترونية والمتحكمات الذكية لبناء وتطوير مشاريعك البرمجية بكل سهولة.</p>
+            </div>
+
+            <div class="footer-box links-box">
+                <h3 data-i18n="footer_links_title">روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="shop.html" data-i18n="footer_link_products">المنتجات</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box contact-box">
+                <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:targetchichani@gmail.com">targetchichani@gmail.com</a></p>
+                <p data-i18n="footer_phone"><i class="fas fa-phone-alt"></i> <a href="tel:+213670346089" style="direction: ltr; display: inline-block;">+213 670 34 60 89</a></p>
+                <p><i class="fas fa-headset"></i> <span data-i18n="footer_support">دعم فني متواصل 24/7</span></p>
+            </div>
+
+            <div class="footer-box social-box">
+                <h3 data-i18n="footer_social_title">تابعنا على منصاتنا</h3>
+                <p data-i18n="footer_social_desc">اشترك وماتنساش تتابعنا على حساباتنا الرسمية:</p>
+                <div class="social-icons">
+                    <a href="https://www.youtube.com/@ChichaniTarget" target="_blank" class="icon-yt" title="Chichani Target على يوتيوب"><i class="fab fa-youtube"></i></a>
+                    <a href="https://t.me/chichani_8" target="_blank" class="icon-tg" title="تيليجرام"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.instagram.com/7essism" target="_blank" class="icon-ig" title="7essism على إنستغرام"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1FkNJqn9LR/" target="_blank" class="icon-fb" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="mailto:targetchichani@gmail.com" target="_blank" class="gmail-neon-link">
+    <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" class="gmail-neon-icon">
+</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <span data-i18n="footer_rights">أردوينو ستور - المطور Houssam HK. جميع الحقوق محفوظة.</span></p>
+        </div>
+    </footer>
+
+    <!-- سلة المشتريات -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+    <!-- قائمة المفضلة -->
+    <div id="wishlistOverlay" class="wishlist-overlay cart-overlay"></div>
+    <aside id="wishlistDrawer" class="wishlist-drawer cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 data-i18n="wishlist_title">المفضلة</h3>
+            <button id="wishlistCloseBtn" class="cart-close-btn" aria-label="إغلاق">&times;</button>
+        </div>
+        <div id="wishlistItemsContainer" class="cart-items-container">
+            <p class="cart-empty-msg" data-i18n="wishlist_empty">لائحة المفضلة فارغة حالياً</p>
+        </div>
+    </aside>
+
+    <aside id="cartDrawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 data-i18n="cart_title">سلة المشتريات</h3>
+            <button id="cartCloseBtn" class="cart-close-btn" aria-label="إغلاق">&times;</button>
+        </div>
+        <div id="cartItemsContainer" class="cart-items-container">
+            <p class="cart-empty-msg" data-i18n="cart_empty">السلة فارغة حالياً</p>
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-total-row">
+                <span data-i18n="cart_total">المجموع</span>
+                <span id="cartTotalPrice">0 DA</span>
+            </div>
+            <button id="cartCheckoutBtn" class="btn-cta cart-checkout-btn" data-i18n="cart_checkout">إتمام الطلب عبر واتساب</button>
+        </div>
+    </aside>
+
+    <!-- زر واتساب العائم (Live Chat) -->
+    <a href="https://wa.me/213670346089?text=مرحباً، عندي استفسار حول منتجاتكم" target="_blank" class="whatsapp-float-btn" aria-label="تواصل معنا عبر واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- زر العودة للأعلى -->
+    <button id="backToTopBtn" class="back-to-top-btn" aria-label="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="products-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

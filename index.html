@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('siteTheme') === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="doc_title">متجر أردوينو الإلكتروني - Houssam HK</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== Particle Loading Screen ===== */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #12173b 0%, #05070d 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 1.5s ease, visibility  1.5s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #particle-canvas { display: block; }
+        #loading-text {
+            color: #9fb3d9;
+            font-size: 14px;
+            letter-spacing: 3px;
+            margin-top: 20px;
+            opacity: 0.8;
+            animation: loadingPulseText 3.6s ease-in-out infinite;
+        }
+        @keyframes loadingPulseText {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        #loading-progress-track {
+            width: 220px;
+            height: 3px;
+            background: rgba(254,254,254,0.1);
+            border-radius: 3px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+        #loading-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #5b8def, #7fd4ff);
+            border-radius: 3px;
+            transition: width 1.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة التحميل (Particle Loading Screen) -->
+    <div id="loading-screen">
+        <canvas id="particle-canvas"></canvas>
+         <div id="loading-text">Guess who's there...</div>
+        <div id="loading-progress-track"><div id="loading-progress-bar"></div></div>
+    </div>
+
+    <!-- Intro (مستوحى من تصميم Massively) -->
+    <div id="intro">
+        <h1 data-i18n="intro_title">أردوينو <span style="color: var(--cta-color);">ستور</span></h1>
+        <p data-i18n="intro_desc">منصتك الأولى للحصول على أفضل القطع الإلكترونية والمتحكمات الذكية لبناء مشاريعك البرمجية بكل سهولة.</p>
+        <ul class="actions">
+            <li><a href="#main-hero" class="btn-intro-continue" data-i18n="intro_btn">⌄ استمر</a></li>
+        </ul>
+    </div>
+
+   <header class="main-header-nav" id="header">
+    <div class="nav-container">
+        
+        <a href="index.html" class="logo" data-i18n="logo">أردوينو <span>ستور</span></a>
+        
+       <nav style="display: flex; align-items: center; gap: 20px;"></nav>
+
+        <button id="cartToggleBtn" class="cart-toggle-btn" aria-label="سلة المشتريات">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="cart-count-badge">0</span>
+        </button>
+
+        <button id="wishlistToggleBtn" class="wishlist-toggle-btn cart-toggle-btn" aria-label="قائمة المفضلة">
+            <i class="fas fa-heart"></i>
+            <span id="wishlistCount" class="wishlist-count-badge cart-count-badge">0</span>
+        </button>
+
+        <button id="menuToggleBtn" class="menu-toggle-btn" aria-label="فتح القائمة"><i class="fas fa-bars"></i></button>
+
+        <nav id="mainNav">
+                <ul class="nav-menu-list">
+                    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                    
+                    <li class="has-mega-menu">
+                        <a href="#" data-i18n="nav_community">مجتمع <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-container">
+                                <div class="mega-column">
+                                    <ul>
+                                        <li><a href="https://t.me/webdev_trainings" target="_blank" data-i18n="comm_web"><i class="fas fa-code"></i> web developer</a></li>
+                                        <li><a href="https://t.me/applicationdeveloperss" target="_blank" data-i18n="comm_app"><i class="fas fa-mobile-alt"></i> app developer</a></li>
+                                        <li><a href="https://youtu.be/7_PeuTsx7UM" target="_blank" data-i18n="comm_ai"><i class="fas fa-robot"></i> Ai automation</a></li>
+                                        <li><a href="https://youtu.be/aPi_Bm5DWFo" target="_blank" data-i18n="comm_workshops"><i class="fas fa-chalkboard-teacher"></i> workshops</a></li>
+                                        <li><a href="https://github.com/targetchichani-ui" target="_blank" data-i18n="comm_github"><i class="fab fa-github"></i> github</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="has-mega-menu">
+                        <a href="#" data-i18n="nav_projects">المشاريع <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-container">
+                                <div class="mega-column">
+                                    <ul>
+                                        <li><a href="https://youtu.be/auTM4S59pgo" target="_blank" data-i18n="proj_weather"><i class="fas fa-cloud-sun"></i> weather situation</a></li>
+                                        <li><a href="https://youtu.be/iZcMQ2dn27s" target="_blank" data-i18n="proj_thermometer"><i class="fas fa-thermometer-half"></i> LCD thermometer</a></li>
+                                        <li><a href="https://youtu.be/iFPfg-x1qX8" target="_blank" data-i18n="proj_blinking"><i class="fas fa-bolt"></i> Blinking LED</a></li>
+                                        <li><a href="https://youtu.be/04rOjWU-w7A" target="_blank" data-i18n="proj_alarm"><i class="fas fa-bell"></i> Motion alarm</a></li>
+                                        <li><a href="https://youtu.be/z524YqJvyak" target="_blank" data-i18n="proj_robot"><i class="fas fa-car"></i> Robot car</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li><a href="shop.html" class="btn-shop-orange" data-i18n="nav_shop">تسوق</a></li>
+                </ul>
+                <button id="darkModeToggleBtn" class="theme-toggle-btn" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button>
+                <button id="lang-toggle-btn" class="lang-switch-btn">English</button>
+            </nav>
+            
+        </div>
+    </header>
+
+    <section class="hero-section" id="main-hero">
+        <div class="hero-canvas-bg" id="heroParallaxBg"></div>
+        <div class="hero-content">
+            <h1 data-i18n="hero_title">ابدأ رحلة الابتكار مع أفضل القطع الإلكترونية</h1>
+            <p data-i18n="hero_desc">نوفر لك لوحات Arduino الأصلي ومكوناتها لتطوير مشاريعك البرمجية بكل سهولة ومن مكان واحد.</p>
+            <a href="shop.html" class="btn-cta" data-i18n="hero_btn">تسوّق الآن</a>
+        </div>
+    </section>
+
+    <section id="products" style="padding: 80px 20px; text-align: center; background-color: #f9f9f9;">
+        <h2 data-i18n="products_title">منتجاتنا المتميزة</h2>
+        <p data-i18n="products_desc" style="margin-bottom: 40px;">أفضل القطع المختارة لمشاريعك القادمة</p>
+
+        <div class="products-grid-container" style="margin-top: 20px;">
+            <div class="product-card" data-id="arduino-uno-r3" data-name="Arduino Uno R3 الأصلي" data-price="2400" data-category="Microcontrollers" data-img="https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=400&q=80">
+                <button class="wishlist-btn" title="أضف إلى المفضلة" data-id="arduino-uno-r3" data-name="Arduino Uno R3 الأصلي" data-price="2400" data-img="https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=400&q=80"><i class="far fa-heart"></i></button>
+                <a href="product-detail.html?id=arduino-uno-r3" class="product-link"><div class="card-img-box">
+                    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=400&q=80" alt="Arduino Uno R3">
+                </div></a>
+                <div class="card-info">
+                    <a href="product-detail.html?id=arduino-uno-r3" class="product-link-title"><h3>Arduino Uno R3 الأصلي</h3></a>
+                    <p class="product-category">Microcontrollers</p>
+                    <div class="card-footer-flex">
+                        <span class="price">2,400 DA</span>
+                        <button class="add-to-cart-btn" title="أضف إلى السلة" data-id="arduino-uno-r3" data-name="Arduino Uno R3 الأصلي" data-price="2400" data-img="https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=400&q=80"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="nodemcu-esp8266-v3-wifi" data-name="NodeMCU ESP8266 V3 WiFi" data-price="1500" data-category="IoT Boards" data-img="[New Article] Connect an ESP8266 NodeMCU to a….jpg">
+                <button class="wishlist-btn" title="أضف إلى المفضلة" data-id="nodemcu-esp8266-v3-wifi" data-name="NodeMCU ESP8266 V3 WiFi" data-price="1500" data-img="[New Article] Connect an ESP8266 NodeMCU to a….jpg"><i class="far fa-heart"></i></button>
+                <a href="product-detail.html?id=nodemcu-esp8266-v3-wifi" class="product-link"><div class="card-img-box">
+                    <img loading="lazy" decoding="async" src="[New Article] Connect an ESP8266 NodeMCU to a….jpg" alt="NodeMCU ESP8266">
+                </div></a>
+                <div class="card-info">
+                    <a href="product-detail.html?id=nodemcu-esp8266-v3-wifi" class="product-link-title"><h3>NodeMCU ESP8266 V3 WiFi</h3></a>
+                    <p class="product-category">IoT Boards</p>
+                    <div class="card-footer-flex">
+                        <span class="price">1,500 DA</span>
+                        <button class="add-to-cart-btn" title="أضف إلى السلة" data-id="nodemcu-esp8266-v3-wifi" data-name="NodeMCU ESP8266 V3 WiFi" data-price="1500" data-img="[New Article] Connect an ESP8266 NodeMCU to a….jpg"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="ultrasonic-sensor-hc-sr04" data-name="Ultrasonic Sensor HC-SR04" data-price="650" data-category="Sensors" data-img="HC-SR04 SOUND ULTRASONIC RANGE DISTANCE SENSOR MODULE FOR ARDUINO ULTRANIC SENSOR MODULE 4PINS.jpg">
+                <button class="wishlist-btn" title="أضف إلى المفضلة" data-id="ultrasonic-sensor-hc-sr04" data-name="Ultrasonic Sensor HC-SR04" data-price="650" data-img="HC-SR04 SOUND ULTRASONIC RANGE DISTANCE SENSOR MODULE FOR ARDUINO ULTRANIC SENSOR MODULE 4PINS.jpg"><i class="far fa-heart"></i></button>
+                <a href="product-detail.html?id=ultrasonic-sensor-hc-sr04" class="product-link"><div class="card-img-box">
+                    <img loading="lazy" decoding="async" src="HC-SR04 SOUND ULTRASONIC RANGE DISTANCE SENSOR MODULE FOR ARDUINO ULTRANIC SENSOR MODULE 4PINS.jpg" alt="Ultrasonic Sensor">
+                </div></a>
+                <div class="card-info">
+                    <a href="product-detail.html?id=ultrasonic-sensor-hc-sr04" class="product-link-title"><h3>Ultrasonic Sensor HC-SR04</h3></a>
+                    <p class="product-category">Sensors</p>
+                    <div class="card-footer-flex">
+                        <span class="price">650 DA</span>
+                        <button class="add-to-cart-btn" title="أضف إلى السلة" data-id="ultrasonic-sensor-hc-sr04" data-name="Ultrasonic Sensor HC-SR04" data-price="650" data-img="HC-SR04 SOUND ULTRASONIC RANGE DISTANCE SENSOR MODULE FOR ARDUINO ULTRANIC SENSOR MODULE 4PINS.jpg"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="solderless-breadboard-830-points" data-name="Solderless Breadboard 830 Points" data-price="650" data-category="Accessories" data-img="Breadboard 830 Point Solderless PCB Bread Board MB-102 MB102 Test Develop DIY.jpg">
+                <button class="wishlist-btn" title="أضف إلى المفضلة" data-id="solderless-breadboard-830-points" data-name="Solderless Breadboard 830 Points" data-price="650" data-img="Breadboard 830 Point Solderless PCB Bread Board MB-102 MB102 Test Develop DIY.jpg"><i class="far fa-heart"></i></button>
+                <a href="product-detail.html?id=solderless-breadboard-830-points" class="product-link"><div class="card-img-box">
+                    <img loading="lazy" decoding="async" src="Breadboard 830 Point Solderless PCB Bread Board MB-102 MB102 Test Develop DIY.jpg" alt="Breadboard">
+                </div></a>
+                <div class="card-info">
+                    <a href="product-detail.html?id=solderless-breadboard-830-points" class="product-link-title"><h3>Solderless Breadboard 830 Points</h3></a>
+                    <p class="product-category">Accessories</p>
+                    <div class="card-footer-flex">
+                        <span class="price">650 DA</span>
+                        <button class="add-to-cart-btn" title="أضف إلى السلة" data-id="solderless-breadboard-830-points" data-name="Solderless Breadboard 830 Points" data-price="650" data-img="Breadboard 830 Point Solderless PCB Bread Board MB-102 MB102 Test Develop DIY.jpg"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="male-to-male-jumper-wires-20cm" data-name="Male-to-Male Jumper Wires 20cm" data-price="350" data-category="Accessories" data-img="40pcs=1lot 10cm 2_54mm 1pin Male to Male jumper wire Dupont cable - AliExpress 13.jpg">
+                <button class="wishlist-btn" title="أضف إلى المفضلة" data-id="male-to-male-jumper-wires-20cm" data-name="Male-to-Male Jumper Wires 20cm" data-price="350" data-img="40pcs=1lot 10cm 2_54mm 1pin Male to Male jumper wire Dupont cable - AliExpress 13.jpg"><i class="far fa-heart"></i></button>
+                <a href="product-detail.html?id=male-to-male-jumper-wires-20cm" class="product-link"><div class="card-img-box">
+                    <img loading="lazy" decoding="async" src="40pcs=1lot 10cm 2_54mm 1pin Male to Male jumper wire Dupont cable - AliExpress 13.jpg" alt="Jumper Wires">
+                </div></a>
+                <div class="card-info">
+                    <a href="product-detail.html?id=male-to-male-jumper-wires-20cm" class="product-link-title"><h3>Male-to-Male Jumper Wires 20cm</h3></a>
+                    <p class="product-category">Accessories</p>
+                    <div class="card-footer-flex">
+                        <span class="price">350 DA</span>
+                        <button class="add-to-cart-btn" title="أضف إلى السلة" data-id="male-to-male-jumper-wires-20cm" data-name="Male-to-Male Jumper Wires 20cm" data-price="350" data-img="40pcs=1lot 10cm 2_54mm 1pin Male to Male jumper wire Dupont cable - AliExpress 13.jpg"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="actions" style="margin-top: 50px; list-style: none;">
+            <li><a href="shop.html" class="btn-cta" data-i18n="products_view_all">تصفح كل المنتجات</a></li>
+        </ul>
+    </section>
+
+    <!-- قسم الإثبات الاجتماعي: آراء الزبائن وشارات الثقة -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="testimonials-header">
+            <h2 data-i18n="testimonials_title">وش قالوا عنا الزبائن</h2>
+            <p data-i18n="testimonials_subtitle">تجارب حقيقية من زبائن اشترو معانا وثقو في الجودة والخدمة</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars stars-display">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial1_text">جودة المكونات والشرح واضحة جداً، شكراً لأنكم تسهلون علينا الدخول في هذا المجال التقني.</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="yassine-moulfi.jpg" alt="ياسين مولفي" loading="lazy">
+                    <div class="testimonial-author-info">
+                        <h4 data-i18n="testimonial1_name">ياسين مولفي</h4>
+                        <span data-i18n="testimonial1_location">سيدي بلعباس</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars stars-display">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial2_text">تعلمت الكثير من دروسك، التدرج في شرح المكونات من الصفر هو أفضل شيء في موقعكم.</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="nadir-tasghat.jpg" alt="نذير تازغات" loading="lazy">
+                    <div class="testimonial-author-info">
+                        <h4 data-i18n="testimonial2_name">نذير تازغات</h4>
+                        <span data-i18n="testimonial2_location">وهران</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars stars-display">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial3_text">أفضل موقع عربي لمشاريع الأردوينو، المحتوى مرتب ومفيد جداً للهواة والمحترفين.</p>
+                <div class="testimonial-author">
+                   <img class="testimonial-avatar" src="7amid.png" alt="عبد الحميد شوايح" loading="lazy">
+                    <div class="testimonial-author-info">
+                        <h4 data-i18n="testimonial3_name">عبد الحميد شوايح</h4>
+                        <span data-i18n="testimonial3_location">غيليزان</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars stars-display">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial4_text">مشروع رائع ومبسط! شكراً لك على مشاركة الكود وشرح الخطوات بهذه الطريقة الواضحة.</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="djlil-abdelbasset.jpg" alt="جليل عبد الباسط" loading="lazy">
+                    <div class="testimonial-author-info">
+                        <h4 data-i18n="testimonial4_name">جليل عبد الباسط</h4>
+                        <span data-i18n="testimonial4_location">واد رهيوا</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trust-badges-bar">
+            <div class="trust-badge-item">
+                <i class="fas fa-truck-fast"></i>
+                <span data-i18n="trust_delivery">توصيل لكل الولايات</span>
+            </div>
+            <div class="trust-badge-item">
+                <i class="fas fa-shield-halved"></i>
+                <span data-i18n="trust_warranty">ضمان على المنتج</span>
+            </div>
+            <div class="trust-badge-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span data-i18n="trust_cod">الدفع عند الاستلام</span>
+            </div>
+            <div class="trust-badge-item">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="trust_support">دعم فني 24/7</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- شريط الشراكات: جامعات وشركات نتعاملو معاهم -->
+    <section id="partners" class="partners-section">
+        <p class="partners-title" data-i18n="partners_title"></p></p>
+        <div class="partners-bar">
+            <span class="partner-logo"><img src="partner-inelec.png" alt="INELEC" ></span>
+            <span class="partner-logo"><img src="partner-usthb.png" alt="USTHB" ></span>
+            <span class="partner-logo"><img src="partner-ensta.png" alt="ENSTA" ></span>
+            <span class="partner-logo"><img src="partner-elsewedy.png" alt="Elsewedy Electric" ></span>
+            <span class="partner-logo"><img src="partner-sonatrach.png" alt="Sonatrach" ></span>
+        </div>
+    </section>
+
+     <!-- شريط عملاؤنا -->
+    <section id="sponsors" class="clients-section">
+        <p class="clients-title" data-i18n="sponsors_title">رعاتنا</p>
+        <div class="clients-bar">
+            <span class="client-logo"><img src="sponsor-arduino.png" alt="Arduino" ></span>
+            <span class="client-logo"><img src="sponsor-philips.png" alt="Philips" ></span>
+            <span class="client-logo"><img src="sponsor-crouzet.png" alt="Crouzet" ></span>
+            <span class="client-logo client-logo-dark-bg"><img src="ras.png" alt="Raspberry Pi" ></span>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <form class="footer-contact-form" method="post" action="#">
+            <h3 data-i18n="form_title">راسلنا</h3>
+            <div class="form-fields">
+                <input type="text" name="name" placeholder="الاسم" data-i18n-placeholder="form_name" required>
+                <input type="email" name="email" placeholder="البريد الإلكتروني" data-i18n-placeholder="form_email" required>
+                <textarea name="message" rows="3" placeholder="رسالتك" data-i18n-placeholder="form_message" required></textarea>
+            </div>
+            <button type="submit" class="btn-cta" data-i18n="form_submit">إرسال</button>
+        </form>
+
+        <div class="footer-container">
+            
+            <div class="footer-box text-box">
+                <h3 data-i18n="footer_about_title">أردوينو ستور</h3>
+                <p data-i18n="footer_about_desc">منصتك الأولى للحصول على أفضل القطع الإلكترونية والمتحكمات الذكية لبناء وتطوير مشاريعك البرمجية بكل سهولة.</p>
+            </div>
+
+            <div class="footer-box links-box">
+                <h3 data-i18n="footer_links_title">روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="shop.html" data-i18n="footer_link_products">المنتجات</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box contact-box">
+                <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:targetchichani@gmail.com">targetchichani@gmail.com</a></p>
+                <p data-i18n="footer_phone"><i class="fas fa-phone-alt"></i> <a href="tel:+213670346089" style="direction: ltr; display: inline-block;">+213 670 34 60 89</a></p>
+                <p><i class="fas fa-headset"></i> <span data-i18n="footer_support">دعم فني متواصل 24/7</span></p>
+            </div>
+
+            <div class="footer-box social-box">
+                <h3 data-i18n="footer_social_title">تابعنا على منصاتنا</h3>
+                <p data-i18n="footer_social_desc">اشترك وماتنساش تتابعنا على حساباتنا الرسمية:</p>
+                <div class="social-icons">
+                    <a href="https://www.youtube.com/@ChichaniTarget" target="_blank" class="icon-yt" title="Chichani Target على يوتيوب"><i class="fab fa-youtube"></i></a>
+                    <a href="https://t.me/chichani_8" target="_blank" class="icon-tg" title="تيليجرام"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.instagram.com/7essism" target="_blank" class="icon-ig" title="7essism على إنستغرام"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1FkNJqn9LR/" target="_blank" class="icon-fb" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="mailto:targetchichani@gmail.com" target="_blank" class="gmail-neon-link">
+    <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" class="gmail-neon-icon">
+</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <span data-i18n="footer_rights">أردوينو ستور - المطور Houssam HK. جميع الحقوق محفوظة.</span></p>
+        </div>
+    </footer>
+
+    <!-- سلة المشتريات -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+    <!-- قائمة المفضلة -->
+    <div id="wishlistOverlay" class="wishlist-overlay cart-overlay"></div>
+    <aside id="wishlistDrawer" class="wishlist-drawer cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 data-i18n="wishlist_title">المفضلة</h3>
+            <button id="wishlistCloseBtn" class="cart-close-btn" aria-label="إغلاق">&times;</button>
+        </div>
+        <div id="wishlistItemsContainer" class="cart-items-container">
+            <p class="cart-empty-msg" data-i18n="wishlist_empty">لائحة المفضلة فارغة حالياً</p>
+        </div>
+    </aside>
+
+    <aside id="cartDrawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 data-i18n="cart_title">سلة المشتريات</h3>
+            <button id="cartCloseBtn" class="cart-close-btn" aria-label="إغلاق">&times;</button>
+        </div>
+        <div id="cartItemsContainer" class="cart-items-container">
+            <p class="cart-empty-msg" data-i18n="cart_empty">السلة فارغة حالياً</p>
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-total-row">
+                <span data-i18n="cart_total">المجموع</span>
+                <span id="cartTotalPrice">0 DA</span>
+            </div>
+            <button id="cartCheckoutBtn" class="btn-cta cart-checkout-btn" data-i18n="cart_checkout">إتمام الطلب عبر واتساب</button>
+        </div>
+    </aside>
+
+    <!-- زر واتساب العائم (Live Chat) -->
+    <a href="https://wa.me/213670346089?text=مرحباً، عندي استفسار حول منتجاتكم" target="_blank" class="whatsapp-float-btn" aria-label="تواصل معنا عبر واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Particle Loading Screen Script -->
+    <script>
+    (function () {
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        const loadingScreen = document.getElementById('loading-screen');
+        const progressBar = document.getElementById('loading-progress-bar');
+        const loadingText = document.getElementById('loading-text');
+
+        // ---- CONFIG: بدل هاد القيم على حسب راحتك ----
+        const IMG_SRC = 'loading-avatar.png'; // مسار الصورة (حطها فنفس فولدر الموقع)
+        const DISPLAY_SIZE = 220;             // حجم الصورة فشاشة التحميل (px)
+        const SAMPLE_GAP = 4;                 // رقم صغير = دقة أعلى بس أبطأ
+        const WHITE_THRESHOLD = 235;          // حساسية شيل اللون الأبيض
+        const ASSEMBLE_DURATION = 2000;       // مدة تجمع النقط (ميلي ثانية)
+        const MIN_SHOW_TIME = 2200;           // أقل مدة تبان فيها الشاشة حتى لو الصفحة تحملت بسرعة
+
+        const img = new Image();
+        img.src = IMG_SRC;
+
+        function fallbackHide() {
+            // إلا الصورة ما تحملاتش (مسار خاطئ)، نخبيو الشاشة بلا كريش للموقع
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => loadingScreen.remove(), 1500);
+            }, MIN_SHOW_TIME);
+        }
+
+        img.onload = () => {
+            const startShow = performance.now();
+
+            const off = document.createElement('canvas');
+            const offCtx = off.getContext('2d');
+            const scale = DISPLAY_SIZE / Math.max(img.width, img.height);
+            const w = Math.round(img.width * scale);
+            const h = Math.round(img.height * scale);
+            off.width = w;
+            off.height = h;
+            offCtx.drawImage(img, 0, 0, w, h);
+
+            let imageData;
+            try {
+                imageData = offCtx.getImageData(0, 0, w, h).data;
+            } catch (e) {
+                fallbackHide();
+                return;
+            }
+
+            const particles = [];
+            for (let y = 0; y < h; y += SAMPLE_GAP) {
+                for (let x = 0; x < w; x += SAMPLE_GAP) {
+                    const idx = (y * w + x) * 4;
+                    const r = imageData[idx], g = imageData[idx + 1], b = imageData[idx + 2], a = imageData[idx + 3];
+                    const isWhiteish = r > WHITE_THRESHOLD && g > WHITE_THRESHOLD && b > WHITE_THRESHOLD;
+                    if (a < 40 || isWhiteish) continue;
+
+                    particles.push({
+                        targetX: x,
+                        targetY: y,
+                        x: Math.random() * w,
+                        y: Math.random() * h * 0.4 - h * 0.5,
+                        color: `rgb(${r},${g},${b})`,
+                        size: SAMPLE_GAP * 0.9,
+                        delay: Math.random() * 400
+                    });
+                }
+            }
+
+            canvas.width = w;
+            canvas.height = h;
+
+            const animStart = performance.now();
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+            function animate(now) {
+                const elapsed = now - animStart;
+                ctx.clearRect(0, 0, w, h);
+
+                let doneCount = 0;
+                particles.forEach(p => {
+                    const localElapsed = Math.max(0, elapsed - p.delay);
+                    const t = Math.min(1, localElapsed / ASSEMBLE_DURATION);
+                    const eased = easeOutCubic(t);
+                    const currentX = p.x + (p.targetX - p.x) * eased;
+                    const currentY = p.y + (p.targetY - p.y) * eased;
+
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = 0.3 + eased * 0.7;
+                    ctx.fillRect(currentX, currentY, p.size, p.size);
+
+                    if (t >= 1) doneCount++;
+                });
+                ctx.globalAlpha = 1;
+
+                progressBar.style.width = Math.round((doneCount / particles.length) * 100) + '%';
+
+                if (doneCount < particles.length) {
+                    requestAnimationFrame(animate);
+                } else {
+                    const elapsedShow = performance.now() - startShow;
+                    const remaining = Math.max(0, MIN_SHOW_TIME - elapsedShow);
+                    loadingText.textContent = 'Houssam Hk ✪';
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        setTimeout(() => loadingScreen.remove(), 1500);
+                    }, remaining);
+                }
+            }
+            requestAnimationFrame(animate);
+        };
+
+        img.onerror = fallbackHide;
+    })();
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

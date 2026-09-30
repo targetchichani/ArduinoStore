@@ -1,0 +1,245 @@
+// بيانات المنتجات الموحدة - تستعمل فصفحة تفاصيل المنتج والبحث/الفلترة
+const PRODUCTS_DATA = [
+  {
+    "id": "arduino-uno-r3",
+    "rating": 4.8,
+    "reviewCount": 132,
+    "name": "Arduino Uno R3 الأصلي",
+    "price": 2400,
+    "category": "Microcontrollers",
+    "img": "https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=400&q=80",
+    "desc_ar": "لوحة تحكم أساسية لبناء مشاريعك الإلكترونية والبرمجية، متوافقة مع بيئة Arduino IDE وتدعم عدد كبير من المكتبات والمشاريع الجاهزة.",
+    "desc_en": "A core microcontroller board for building your electronics and coding projects, compatible with the Arduino IDE and a huge library ecosystem."
+  },
+  {
+    "id": "arduino-mega-2560-r3",
+    "rating": 4.7,
+    "reviewCount": 64,
+    "name": "Arduino Mega 2560 R3",
+    "price": 3800,
+    "category": "Microcontrollers",
+    "img": "Arduino Mega 2560.jpg",
+    "desc_ar": "لوحة تحكم أساسية لبناء مشاريعك الإلكترونية والبرمجية، متوافقة مع بيئة Arduino IDE وتدعم عدد كبير من المكتبات والمشاريع الجاهزة.",
+    "desc_en": "A core microcontroller board for building your electronics and coding projects, compatible with the Arduino IDE and a huge library ecosystem."
+  },
+  {
+    "id": "nodemcu-esp8266-v3-wifi",
+    "rating": 4.6,
+    "reviewCount": 98,
+    "name": "NodeMCU ESP8266 V3 WiFi",
+    "price": 1500,
+    "category": "IoT Boards",
+    "img": "[New Article] Connect an ESP8266 NodeMCU to a….jpg",
+    "desc_ar": "لوحة متصلة بالواي فاي مثالية لمشاريع إنترنت الأشياء (IoT)، تمكنك من التحكم عن بعد وجمع البيانات عبر الشبكة بكل سهولة.",
+    "desc_en": "A WiFi-enabled board perfect for IoT projects, letting you control devices remotely and collect data over the network with ease."
+  },
+  {
+    "id": "esp32-development-node-board",
+    "rating": 4.7,
+    "reviewCount": 77,
+    "name": "ESP32 Development Node Board",
+    "price": 2200,
+    "category": "IoT Boards",
+    "img": "fuck.jpg",
+    "desc_ar": "لوحة متصلة بالواي فاي مثالية لمشاريع إنترنت الأشياء (IoT)، تمكنك من التحكم عن بعد وجمع البيانات عبر الشبكة بكل سهولة.",
+    "desc_en": "A WiFi-enabled board perfect for IoT projects, letting you control devices remotely and collect data over the network with ease."
+  },
+  {
+    "id": "ultrasonic-sensor-hc-sr04",
+    "rating": 4.5,
+    "reviewCount": 145,
+    "name": "Ultrasonic Sensor HC-SR04",
+    "price": 650,
+    "category": "Sensors",
+    "img": "HC-SR04 SOUND ULTRASONIC RANGE DISTANCE SENSOR MODULE FOR ARDUINO ULTRANIC SENSOR MODULE 4PINS.jpg",
+    "desc_ar": "حساس دقيق وسهل الدمج مع أي متحكم Arduino أو ESP، يعطيك قراءات موثوقة فمشاريع القياس والاستشعار.",
+    "desc_en": "A precise sensor that's easy to integrate with any Arduino or ESP controller, giving reliable readings for your measurement projects."
+  },
+  {
+    "id": "pir-motion-sensor-hc-sr501",
+    "rating": 4.3,
+    "reviewCount": 52,
+    "name": "PIR Motion Sensor HC-SR501",
+    "price": 550,
+    "category": "Sensors",
+    "img": "shit.jpg",
+    "desc_ar": "حساس دقيق وسهل الدمج مع أي متحكم Arduino أو ESP، يعطيك قراءات موثوقة فمشاريع القياس والاستشعار.",
+    "desc_en": "A precise sensor that's easy to integrate with any Arduino or ESP controller, giving reliable readings for your measurement projects."
+  },
+  {
+    "id": "dht11-temperature-humidity-module",
+    "rating": 4.4,
+    "reviewCount": 89,
+    "name": "DHT11 Temperature & Humidity Module",
+    "price": 450,
+    "category": "Sensors",
+    "img": "DHT11 Temperature-Humidity Sensor.jpg",
+    "desc_ar": "حساس دقيق وسهل الدمج مع أي متحكم Arduino أو ESP، يعطيك قراءات موثوقة فمشاريع القياس والاستشعار.",
+    "desc_en": "A precise sensor that's easy to integrate with any Arduino or ESP controller, giving reliable readings for your measurement projects."
+  },
+  {
+    "id": "l298n-dual-h-bridge-motor-driver",
+    "rating": 4.6,
+    "reviewCount": 41,
+    "name": "L298N Dual H-Bridge Motor Driver",
+    "price": 950,
+    "category": "Drivers",
+    "img": "L298N Motor Driver Module Dual DC Stepper Motor Controller L298N DC Motor Drivers for Arduino Smart.jpg",
+    "desc_ar": "متحكم موتورات يسمح لك بالتحكم فسرعة واتجاه المحركات من لوحتك الأساسية بكل أمان.",
+    "desc_en": "A motor driver that lets you control motor speed and direction safely from your main board."
+  },
+  {
+    "id": "sg90-mini-servo-motor-9g",
+    "rating": 4.2,
+    "reviewCount": 36,
+    "name": "SG90 Mini Servo Motor 9g",
+    "price": 480,
+    "category": "Motors",
+    "img": "SG90 9G Servo Motor 180 Rotation Angle Weight 9g Degree Servo Motor For Mini Helicopter.jpg",
+    "desc_ar": "محرك خفيف ودقيق، مثالي فمشاريع الروبوتيك والحركة الأوتوماتيكية.",
+    "desc_en": "A lightweight, precise motor ideal for robotics and automated motion projects."
+  },
+  {
+    "id": "lcd-16x2-display-blue-with-i2c-module",
+    "rating": 4.7,
+    "reviewCount": 58,
+    "name": "LCD 16x2 Display Blue with I2C Module",
+    "price": 1200,
+    "category": "Displays",
+    "img": "Aokin LCD1602 1602 LCD Module Blue Screen 16x2 Character LCD Display with IIC I2C Serial Interface.jpg",
+    "desc_ar": "شاشة عرض واضحة تمكنك من إظهار البيانات والقراءات مباشرة من مشروعك بدون الحاجة لحاسوب.",
+    "desc_en": "A clear display screen that lets you show data and readings directly from your project without a computer."
+  },
+  {
+    "id": "oled-0-96-inch-ssd1306-display",
+    "rating": 4.6,
+    "reviewCount": 47,
+    "name": "OLED 0.96 inch SSD1306 Display",
+    "price": 1400,
+    "category": "Displays",
+    "img": "0_96inch OLED (A).jpg",
+    "desc_ar": "شاشة عرض واضحة تمكنك من إظهار البيانات والقراءات مباشرة من مشروعك بدون الحاجة لحاسوب.",
+    "desc_en": "A clear display screen that lets you show data and readings directly from your project without a computer."
+  },
+  {
+    "id": "rfid-rc522-smart-card-reader-kit",
+    "rating": 4.4,
+    "reviewCount": 33,
+    "name": "RFID RC522 Smart Card Reader Kit",
+    "price": 850,
+    "category": "Modules",
+    "img": "Arduino RFID RC522 Card Reader Detector Module Kit.jpg",
+    "desc_ar": "وحدة إلكترونية جاهزة للاستعمال، سهلة الدمج مع Arduino لتوسيع إمكانيات مشروعك.",
+    "desc_en": "A ready-to-use electronic module that's easy to integrate with Arduino to extend your project's capabilities."
+  },
+  {
+    "id": "nrf24l01-2-4ghz-wireless-module",
+    "rating": 4.3,
+    "reviewCount": 29,
+    "name": "NRF24L01 2.4GHz Wireless Module",
+    "price": 600,
+    "category": "Wireless",
+    "img": "nRF24L01 2_4G Wireless Transceiver Module.jpg",
+    "desc_ar": "وحدة اتصال لاسلكي تمكنك من ربط عدة لوحات Arduino ببعضها البعض عن بعد.",
+    "desc_en": "A wireless communication module that lets you connect multiple Arduino boards to each other remotely."
+  },
+  {
+    "id": "5v-relay-module-1-channel-for-arduino",
+    "rating": 4.5,
+    "reviewCount": 61,
+    "name": "5V Relay Module 1-Channel For Arduino",
+    "price": 400,
+    "category": "Modules",
+    "img": "Modulo rele 1 canal.jpg",
+    "desc_ar": "وحدة إلكترونية جاهزة للاستعمال، سهلة الدمج مع Arduino لتوسيع إمكانيات مشروعك.",
+    "desc_en": "A ready-to-use electronic module that's easy to integrate with Arduino to extend your project's capabilities."
+  },
+  {
+    "id": "rtc-ds3231-high-precision-clock",
+    "rating": 4.6,
+    "reviewCount": 27,
+    "name": "RTC DS3231 High Precision Clock",
+    "price": 750,
+    "category": "Modules",
+    "img": "WINGONEER® Tiny DS3231 AT24C32 I2C Module Precision Real Time Clock Module For Arduino.jpg",
+    "desc_ar": "وحدة إلكترونية جاهزة للاستعمال، سهلة الدمج مع Arduino لتوسيع إمكانيات مشروعك.",
+    "desc_en": "A ready-to-use electronic module that's easy to integrate with Arduino to extend your project's capabilities."
+  },
+  {
+    "id": "microphone-sound-sensor-module",
+    "rating": 4.1,
+    "reviewCount": 18,
+    "name": "Microphone Sound Sensor Module",
+    "price": 350,
+    "category": "Sensors",
+    "img": "Microphone Sound Sensor Voice Detection Module with Digital and Analog Out, for Diy, Projects.jpg",
+    "desc_ar": "حساس دقيق وسهل الدمج مع أي متحكم Arduino أو ESP، يعطيك قراءات موثوقة فمشاريع القياس والاستشعار.",
+    "desc_en": "A precise sensor that's easy to integrate with any Arduino or ESP controller, giving reliable readings for your measurement projects."
+  },
+  {
+    "id": "rain-drops-detection-water-sensor",
+    "rating": 4.2,
+    "reviewCount": 22,
+    "name": "Rain Drops Detection Water Sensor",
+    "price": 450,
+    "category": "Sensors",
+    "img": "Maghihiwalay na PCB raindrop level detection water rise rain drop sensor board module.jpg",
+    "desc_ar": "حساس دقيق وسهل الدمج مع أي متحكم Arduino أو ESP، يعطيك قراءات موثوقة فمشاريع القياس والاستشعار.",
+    "desc_en": "A precise sensor that's easy to integrate with any Arduino or ESP controller, giving reliable readings for your measurement projects."
+  },
+  {
+    "id": "mb102-power-supply-module-3-3v-5v",
+    "rating": 4.4,
+    "reviewCount": 39,
+    "name": "MB102 Power Supply Module 3.3V/5V",
+    "price": 500,
+    "category": "Power",
+    "img": "Mb102 Breadboard Power Supply Board Module 3_3v 5V Dual Voltage for Arduino, Size_53 mm x 32 mm.jpg",
+    "desc_ar": "وحدة تغذية كهربائية موثوقة توفر جهد ثابت لمشروعك على البريدبورد.",
+    "desc_en": "A reliable power module that provides stable voltage for your breadboard project."
+  },
+  {
+    "id": "solderless-breadboard-830-points",
+    "rating": 4.8,
+    "reviewCount": 156,
+    "name": "Solderless Breadboard 830 Points",
+    "price": 650,
+    "category": "Accessories",
+    "img": "Breadboard 830 Point Solderless PCB Bread Board MB-102 MB102 Test Develop DIY.jpg",
+    "desc_ar": "أداة أساسية فكل ورشة إلكترونيات، تسهل عليك التوصيل والتجريب بلا لحام وبسرعة.",
+    "desc_en": "An essential tool for any electronics workshop, making wiring and prototyping fast and solder-free."
+  },
+  {
+    "id": "male-to-male-jumper-wires-20cm",
+    "rating": 4.5,
+    "reviewCount": 210,
+    "name": "Male-to-Male Jumper Wires 20cm",
+    "price": 350,
+    "category": "Accessories",
+    "img": "40pcs=1lot 10cm 2_54mm 1pin Male to Male jumper wire Dupont cable - AliExpress 13.jpg",
+    "desc_ar": "أداة أساسية فكل ورشة إلكترونيات، تسهل عليك التوصيل والتجريب بلا لحام وبسرعة.",
+    "desc_en": "An essential tool for any electronics workshop, making wiring and prototyping fast and solder-free."
+  },
+  {
+    "id": "ir-remote-receiver-controller-kit",
+    "rating": 4.3,
+    "reviewCount": 24,
+    "name": "IR Remote Receiver Controller Kit",
+    "price": 550,
+    "category": "Modules",
+    "img": "Smart IR Remote Control Sensor Module (HX1838) - Wireless Infrared Receiver Kit for Arduino and Home.jpg",
+    "desc_ar": "وحدة إلكترونية جاهزة للاستعمال، سهلة الدمج مع Arduino لتوسيع إمكانيات مشروعك.",
+    "desc_en": "A ready-to-use electronic module that's easy to integrate with Arduino to extend your project's capabilities."
+  },
+  {
+    "id": "4x4-matrix-membrane-keypad",
+    "rating": 4.4,
+    "reviewCount": 19,
+    "name": "4x4 Matrix Membrane Keypad",
+    "price": 450,
+    "category": "Accessories",
+    "img": "966889 - KEYPAD MEMBRANE 4X4 MATRIX EXTERNAL EXPANSION CONTROL BOARD - Newegg_com.jpg",
+    "desc_ar": "أداة أساسية فكل ورشة إلكترونيات، تسهل عليك التوصيل والتجريب بلا لحام وبسرعة.",
+    "desc_en": "An essential tool for any electronics workshop, making wiring and prototyping fast and solder-free."
+  }
+];
