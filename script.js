@@ -941,6 +941,7 @@ document.querySelectorAll('.footer-contact-form').forEach(form => {
                 body: new FormData(form)    // يجمع كل حقول النموذج تلقائياً
             });
             const data = await res.json();
+            console.log(res.status, data);
 
             if (data.success) {
                 statusEl.textContent = ar ? 'تم الإرسال بنجاح ✅' : 'Sent successfully ✅';
