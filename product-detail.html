@@ -435,19 +435,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderProductRating() {
         if (!window.ArduinoRatings) return;
         const stats = window.ArduinoRatings.getStats(product);
-        const lang = localStorage.getItem('selectedLanguage') || 'ar';
 
-        if (stats.count === 0) {
-            if (pdRatingStarsEl) pdRatingStarsEl.innerHTML = '';
-            if (pdRatingCountEl) {
-                pdRatingCountEl.textContent = lang === 'ar' ? 'لا توجد تقييمات بعد' : 'No reviews yet';
-            }
-        } else {
-            if (pdRatingStarsEl) pdRatingStarsEl.innerHTML = window.ArduinoRatings.buildStarsHTML(stats.avg);
-            if (pdRatingCountEl) {
-                const reviewsLabel = lang === 'ar' ? 'تقييم' : 'reviews';
-                pdRatingCountEl.textContent = `${stats.avg.toFixed(1)} (${stats.count} ${reviewsLabel})`;
-            }
+        if (pdRatingStarsEl) pdRatingStarsEl.innerHTML = window.ArduinoRatings.buildStarsHTML(stats.avg);
+
+        if (pdRatingCountEl) {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'ar';
+            const reviewsLabel = currentLang === 'ar' ? 'تقييم' : 'reviews';
+            pdRatingCountEl.textContent = `${stats.avg.toFixed(1)} (${stats.count} ${reviewsLabel})`;
         }
 
         if (pdRateInputEl) {
