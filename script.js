@@ -115,8 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
             testimonial2_name: "نذير تازغات",
             testimonial2_location: "وهران",
             testimonial3_text: "أفضل موقع عربي لمشاريع الأردوينو، المحتوى مرتب ومفيد جداً للهواة والمحترفين.",
-            testimonial3_name: "شمام إلياس ",
-            testimonial3_location: "بومرداس ",
+            testimonial3_name: "عبد الحميد شوايح ",
+            testimonial3_location: "غيليزان ",
             testimonial4_text: "مشروع رائع ومبسط! شكراً لك على مشاركة الكود وشرح الخطوات بهذه الطريقة الواضحة.",
             testimonial4_name: "جليل عبد الباسط",
             testimonial4_location: "واد رهيوا",
@@ -210,8 +210,8 @@ document.addEventListener("DOMContentLoaded", () => {
             testimonial2_name: "Nadir Tasghat",
             testimonial2_location: "Oran",
             testimonial3_text: "The best Arabic website for Arduino projects, the content is organized and very useful for both hobbyists and professionals.",
-            testimonial3_name: "Chemmam Ilyes",
-            testimonial3_location: "BOUMERDES",
+            testimonial3_name: "Chouaih abdelhamid ",
+            testimonial3_location: "relizane",
             testimonial4_text: "A great and simplified project! Thank you for sharing the code and explaining the steps so clearly.",
             testimonial4_name: "Djlil Abdelbasset",
             testimonial4_location: "Oued Rhiou",
@@ -919,4 +919,40 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+    // نجلب كل نماذج "راسلنا" في الصفحة
+document.querySelectorAll('.footer-contact-form').forEach(form => {
+    const btn = form.querySelector('button[type="submit"]');
+
+    // ننشئ عنصراً لعرض رسالة النجاح أو الخطأ
+    const statusEl = document.createElement('p');
+    statusEl.className = 'form-status';
+    form.appendChild(statusEl);
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();                 // نمنع إعادة تحميل الصفحة
+        const ar = currentLang === 'ar';
+        btn.disabled = true;                // نمنع الضغط المتكرر
+        statusEl.textContent = ar ? 'جاري الإرسال...' : 'Sending...';
+
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: new FormData(form)    // يجمع كل حقول النموذج تلقائياً
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                statusEl.textContent = ar ? 'تم الإرسال بنجاح ✅' : 'Sent successfully ✅';
+                form.reset();               // يفرّغ الحقول
+            } else {
+                throw new Error('failed');
+            }
+        } catch (err) {
+            statusEl.textContent = ar ? 'تعذر الإرسال، حاول مرة أخرى' : 'Could not send, try again';
+        } finally {
+            btn.disabled = false;           // يعمل دائماً، نجح الإرسال أم فشل
+        }
+    });
+});
 });

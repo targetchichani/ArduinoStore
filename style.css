@@ -2330,3 +2330,4 @@ html.dark-mode .client-logo-dark-bg {
     background-color: #ffffff;
     border-color: #1c2b38;
 }
+.form-status { margin-top: 12px; font-size: 14px; }
