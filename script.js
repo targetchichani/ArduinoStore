@@ -804,20 +804,12 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings));
     }
 
-    // يحسب متوسط التقييم وعدد المراجعات، ويدمج تقييم المستخدم الحالي (من هاد الجهاز) إذا كاين
-    function getRatingStats(product) {
-        const baseAvg = product.rating || 4.5;
-        const baseCount = product.reviewCount || 0;
-        const userRating = getUserRatings()[product.id] || null;
-
-        if (!userRating) {
-            return { avg: baseAvg, count: baseCount, userRating: null };
-        }
-
-        const totalCount = baseCount + 1;
-        const avg = ((baseAvg * baseCount) + userRating) / totalCount;
-        return { avg: avg, count: totalCount, userRating: userRating };
-    }
+   function getRatingStats(product) {
+    const avg = product.rating || 0;
+    const count = product.reviewCount || 0;
+    const userRating = getUserRatings()[product.id] || null;
+    return { avg, count, userRating };
+}
 
     // يبني HTML لنجوم القراءة فقط (نجمة ممتلئة / نصف نجمة / نجمة فارغة)
     function buildStarsHTML(avg) {
@@ -851,6 +843,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const stats = getRatingStats(product);
             let ratingEl = card.querySelector('.card-rating');
+
+            // لا تقييمات حقيقية → لا نعرض شيئاً
+            if (stats.count === 0) {
+                if (ratingEl) ratingEl.remove();
+                return;
+            }
+
             if (!ratingEl) {
                 const categoryEl = card.querySelector('.product-category');
                 if (!categoryEl) return;
