@@ -811,22 +811,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return { avg, count, userRating };
 }
 
-    // يبني HTML لنجوم القراءة فقط (نجمة ممتلئة / نصف نجمة / نجمة فارغة)
-    function buildStarsHTML(avg) {
-        let html = '';
-        const rounded = Math.round(avg * 2) / 2;
-        for (let i = 1; i <= 5; i++) {
-            if (rounded >= i) {
-                html += '<i class="fas fa-star"></i>';
-            } else if (rounded >= i - 0.5) {
-                html += '<i class="fas fa-star-half-alt"></i>';
-            } else {
-                html += '<i class="far fa-star"></i>';
-            }
-        }
-        return html;
-    }
-
     // نصدرهم للعالم الخارجي باش يستعملهم product-detail.js بلا تكرار للكود
     window.ArduinoRatings = {
         getStats: getRatingStats,
@@ -843,13 +827,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const stats = getRatingStats(product);
             let ratingEl = card.querySelector('.card-rating');
-
-            // لا تقييمات حقيقية → لا نعرض شيئاً
-            if (stats.count === 0) {
-                if (ratingEl) ratingEl.remove();
-                return;
-            }
-
             if (!ratingEl) {
                 const categoryEl = card.querySelector('.product-category');
                 if (!categoryEl) return;
