@@ -491,7 +491,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.remove('cart-open');
     }
 
-    if (cartToggleBtn) cartToggleBtn.addEventListener('click', openCart);
+    if (cartToggleBtn) cartToggleBtn.addEventListener('click', function () {
+        if (cartDrawer && cartDrawer.classList.contains('active')) closeCart(); else openCart();
+    });
     if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
     if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
@@ -665,7 +667,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.remove('cart-open');
     }
 
-    if (wishlistToggleBtn) wishlistToggleBtn.addEventListener('click', openWishlist);
+    if (wishlistToggleBtn) wishlistToggleBtn.addEventListener('click', function () {
+        if (wishlistDrawer && wishlistDrawer.classList.contains('active')) closeWishlist(); else openWishlist();
+    });
     if (wishlistCloseBtn) wishlistCloseBtn.addEventListener('click', closeWishlist);
     if (wishlistOverlay) wishlistOverlay.addEventListener('click', closeWishlist);
 
