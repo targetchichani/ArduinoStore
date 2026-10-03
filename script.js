@@ -794,6 +794,52 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==================== نظام التقييمات (Ratings) - نجوم حقيقية + عدد المراجعات ====================
     const RATINGS_KEY = 'arduinoStoreUserRatings';
 
+    // ⚙️ إعدادات Supabase (انسخهم من: Project Settings → API). إذا خليتهم فارغين التقييم يبقى محلي فقط.
+    const SUPABASE_URL = 'https://fpejihilioqhcvvzdnpq.supabase.co';       // مثال: https://xxxx.supabase.co
+    const SUPABASE_ANON_KEY = 'sb_publishable_CDKOmIjEuS-33fk8gcljKA_3jnjvM_P';  // المفتاح العام (anon public key)
+    const RATINGS_REMOTE = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
+
+    // الأرقام الحقيقية (المعدل + العدد) لكل منتج، تجي من قاعدة البيانات
+    let remoteStats = {};
+
+    function supabaseHeaders() {
+        return {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json'
+        };
+    }
+
+    // معرّف عشوائي لهذا المتصفح (باش تقييم واحد لكل متصفح لكل منتج)
+    function getVoterId() {
+        let id = localStorage.getItem('arduinoStoreVoterId');
+        if (!id) {
+            id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+                : 'v-' + Date.now() + '-' + Math.random().toString(36).slice(2, 12);
+            localStorage.setItem('arduinoStoreVoterId', id);
+        }
+        return id;
+    }
+
+    async function loadRemoteStats() {
+        if (!RATINGS_REMOTE) return;
+        try {
+            const res = await fetch(SUPABASE_URL + '/rest/v1/rating_stats?select=product_id,avg_rating,review_count', {
+                headers: supabaseHeaders()
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const rows = await res.json();
+            const map = {};
+            rows.forEach(r => {
+                map[r.product_id] = { avg: Number(r.avg_rating) || 0, count: Number(r.review_count) || 0 };
+            });
+            remoteStats = map;
+            window.dispatchEvent(new Event('ratingsUpdated'));
+        } catch (e) {
+            console.warn('تعذر تحميل التقييمات:', e);
+        }
+    }
+
     function getUserRatings() {
         try {
             return JSON.parse(localStorage.getItem(RATINGS_KEY)) || {};
@@ -802,18 +848,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function saveUserRating(productId, value) {
+    async function saveUserRating(productId, value) {
         const ratings = getUserRatings();
         ratings[productId] = value;
         localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings));
+
+        if (!RATINGS_REMOTE) return;
+        try {
+            const res = await fetch(SUPABASE_URL + '/rest/v1/rpc/rate_product', {
+                method: 'POST',
+                headers: supabaseHeaders(),
+                body: JSON.stringify({ p_product_id: productId, p_voter_id: getVoterId(), p_value: value })
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            await loadRemoteStats();
+        } catch (e) {
+            console.warn('تعذر حفظ التقييم:', e);
+        }
     }
 
-   function getRatingStats(product) {
-    const avg = product.rating || 0;
-    const count = product.reviewCount || 0;
-    const userRating = getUserRatings()[product.id] || null;
-    return { avg, count, userRating };
-}
+    function getRatingStats(product) {
+        const remote = remoteStats[product.id];
+        const avg = remote ? remote.avg : (RATINGS_REMOTE ? 0 : (product.rating || 0));
+        const count = remote ? remote.count : (RATINGS_REMOTE ? 0 : (product.reviewCount || 0));
+        const userRating = getUserRatings()[product.id] || null;
+        return { avg, count, userRating };
+    }
 
     // يبني HTML لنجوم القراءة فقط (نجمة ممتلئة / نصف نجمة / نجمة فارغة)
     function buildStarsHTML(avg) {
@@ -867,6 +927,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderCardRatings();
     window.addEventListener('languageChanged', renderCardRatings);
+    window.addEventListener('ratingsUpdated', renderCardRatings);
+    loadRemoteStats();
 
     // ==================== Skeleton Loading لصور المنتجات (كروت الرئيسية والمتجر) ====================
     function initCardImageSkeletons() {

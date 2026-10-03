@@ -461,6 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderProductRating();
+    window.addEventListener('ratingsUpdated', renderProductRating);
 
     if (pdRateInputEl) {
         const starEls = Array.from(pdRateInputEl.querySelectorAll('i'));
@@ -475,9 +476,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
 
-            star.addEventListener('click', () => {
+            star.addEventListener('click', async () => {
                 const val = parseInt(star.dataset.value, 10);
-                if (window.ArduinoRatings) window.ArduinoRatings.saveRating(product.id, val);
+                if (window.ArduinoRatings) await window.ArduinoRatings.saveRating(product.id, val);
                 renderProductRating();
                 if (pdRateFeedbackEl) {
                     const currentLang = localStorage.getItem('selectedLanguage') || 'ar';
