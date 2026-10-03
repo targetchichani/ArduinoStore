@@ -11,6 +11,17 @@
             } catch (e) {}
         })();
     </script>
+    <script>
+        (function() {
+            try {
+                if (sessionStorage.getItem('loaderShown')) {
+                    document.documentElement.classList.add('no-loader');
+                } else {
+                    sessionStorage.setItem('loaderShown', '1');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="doc_title">متجر أردوينو الإلكتروني - Houssam HK</title>
     <link rel="icon" type="image/png" href="favicon.png">
@@ -18,6 +29,7 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
+        .no-loader #loading-screen { display: none !important; }
         /* ===== Particle Loading Screen ===== */
         #loading-screen {
             position: fixed;
@@ -457,6 +469,11 @@
         const loadingScreen = document.getElementById('loading-screen');
         const progressBar = document.getElementById('loading-progress-bar');
         const loadingText = document.getElementById('loading-text');
+
+        if (document.documentElement.classList.contains('no-loader')) {
+            loadingScreen.remove();
+            return;
+        }
 
         // ---- CONFIG: بدل هاد القيم على حسب راحتك ----
         const IMG_SRC = 'loading-avatar.png'; // مسار الصورة (حطها فنفس فولدر الموقع)
